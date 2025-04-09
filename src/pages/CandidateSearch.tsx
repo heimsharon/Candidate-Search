@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Candidate as CandidateType } from '../interfaces/Candidate.interface';
-import '../styles/styles.css';
+import '../Styles/index.css';
 
 const CandidateSearch: React.FC = () => {
     const [candidates, setCandidates] = useState<any[]>([]);
