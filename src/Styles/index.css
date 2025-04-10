@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
@@ -22,6 +23,7 @@ a:hover {
   color: #535bf2;
 }
 
+/* Global font size and centering */
 body {
   background: linear-gradient(
     180deg,
@@ -36,6 +38,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-size: 1.2em; /* Increase the base font size */
+  text-align: center; /* Center all text content */
 }
 
 h1 {
@@ -43,11 +47,16 @@ h1 {
   line-height: 1.1;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  text-align: center; /* Center all headings */
+  font-size: 1.5em; /* Increase font size for headings */
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
-  font-size: 1em;
+  font-size: 1.2em; /* Increase font size for buttons */
   font-weight: 500;
   font-family: inherit;
   background-color: #1d301d;
@@ -62,18 +71,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
+
 
 main {
   color: #fff;
@@ -96,9 +94,10 @@ tbody tr:nth-child(odd) {
 
 .nav {
   display: flex;
-  justify-content: center; /* Center items horizontally */
+  justify-content: center; /* Center nav items horizontally */
   align-items: center;    /* Center items vertically */
   padding: 1em 2em;
+  font-size: 1.2em; /* Increase font size for nav items */
 }
 
 .nav-item {
@@ -119,6 +118,7 @@ tbody tr:nth-child(odd) {
 .table {
   width: 80vw;
   table-layout: fixed;
+  margin: 0 auto; /* Center the table horizontally */
 }
 
 .candidate-card {
@@ -130,6 +130,8 @@ tbody tr:nth-child(odd) {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 1.2em; /* Increase font size for candidate cards */
+  text-align: center; /* Center text in candidate cards */
 }
 
 .candidate-info img {
@@ -180,31 +182,29 @@ tbody tr:nth-child(odd) {
 
 /* Buttons */
 .save-button {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  background-color: #28a745; /* Green base color */
+  color: white; /* Ensure text is readable */
+  font-size: 1.5em; /* Increase the font size */
+  padding: 75px 75px; /* Add padding for larger buttons */
+  border-radius: 8px; /* Rounded corners */
   cursor: pointer;
-  font-size: 16px;
 }
 
 .save-button:hover {
-  background-color: #0a390c;
+  background-color: #218838; /* Darker green for hover effect */
 }
 
 .skip-button {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  background-color: #dc3545; /* Red base color */
+  color: white; /* Ensure text is readable */
+  font-size: 1.5em; /* Increase the font size */
+  padding: 75px 75px; /* Add padding for larger buttons */
+  border-radius: 8px; /* Rounded corners */
   cursor: pointer;
-  font-size: 16px;
 }
 
 .skip-button:hover {
-  background-color: #591a19;
+  background-color: #5b171f; /* Darker red for hover effect */
 }
 
 /* Table Styling */
@@ -218,8 +218,9 @@ tbody tr:nth-child(odd) {
 .saved-candidates-table td {
   border: 1px solid #ddd;
   padding: 8px;
-  text-align: center; /* Center content horizontally */
-  vertical-align: middle; /* Center content vertically */
+  text-align: center; /* Center content horizontally in table cells */
+  vertical-align: middle; /* Center content vertically in table cells */
+  font-size: 1.2em; /* Increase font size for table content */
 }
 
 .saved-candidates-table th {
@@ -255,5 +256,35 @@ tbody tr:nth-child(odd) {
 }
 
 .reject-button:hover {
-  background-color: #e53935;
+  background-color: #480e0d;
+}
+
+.plus-button, .minus-button {
+  font-size: 2.5em; /* Further increase the font size */
+  padding: 20px 30px; /* Add more padding for larger buttons */
+  border-radius: 12px; /* Adjust border radius for a rounded look */
+  width: 80px; /* Set a fixed width for consistency */
+  height: 80px; /* Set a fixed height for consistency */
+  display: flex; /* Ensure proper alignment */
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  cursor: pointer;
+}
+
+.plus-button:hover, .minus-button:hover {
+  background-color: #3b3f95; /* Optional: Add hover effect */
+  color: white; /* Optional: Change text color on hover */
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
 }
