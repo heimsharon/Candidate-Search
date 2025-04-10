@@ -101,13 +101,14 @@ tbody tr:nth-child(odd) {
 }
 
 .nav-item {
-  padding: 0 0.5rem;
+  padding: 0 1rem;
   list-style: none;
 }
 
 .nav-link {
   color: #fff;
   text-decoration: none;
+  margin-right: 1.5rem;
 }
 
 .active {
