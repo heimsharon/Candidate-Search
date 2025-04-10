@@ -64,8 +64,8 @@ const CandidateSearch: React.FC = () => {
             </a>
           </div>
           <div className="candidate-actions">
-            <button onClick={() => handleSave(candidates[currentIndex])}>+</button>
-            <button onClick={handleSkip}>-</button>
+            <button className="save-button" onClick={() => handleSave(candidates[currentIndex])}>+</button>
+            <button className="skip-button" onClick={handleSkip}>-</button>
           </div>
         </div>
       ) : (
