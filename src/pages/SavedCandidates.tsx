@@ -1,24 +1,14 @@
 import React from 'react';
+import { useOutletContext } from 'react-router-dom';
+import { Candidate } from '../interfaces/Candidate.interface';
 import '../Styles/index.css';
 
-interface Candidate {
-  name: string;
-  username: string;
-  location: string;
-  avatar: string;
-  email: string;
-  html_url: string;
-  company: string;
-}
+const SavedCandidates: React.FC = () => {
+  const { savedCandidates } = useOutletContext<{ savedCandidates: Candidate[] }>();
 
-interface SavedCandidatesProps {
-  savedCandidates: Candidate[];
-}
-
-const SavedCandidates: React.FC<SavedCandidatesProps> = ({ savedCandidates }) => {
   return (
     <>
-      <h1>Potential Candidates</h1>
+      <h1>Saved Candidates</h1>
       <div className="saved-candidates-list">
         {savedCandidates.length > 0 ? (
           savedCandidates.map((candidate, index) => (

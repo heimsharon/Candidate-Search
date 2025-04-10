@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Nav from './components/Nav';
-
+import { Candidate } from './interfaces/Candidate.interface';
 
 const App = () => {
-  const [ savedCandidates, setSavedCandidates ] = useState([]);
+  const [savedCandidates, setSavedCandidates] = useState<Candidate[]>([]);
+
   return (
     <>
       <Nav />
@@ -13,6 +14,6 @@ const App = () => {
       </main>
     </>
   );
-}
+};
 
 export default App;

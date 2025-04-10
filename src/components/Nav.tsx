@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/index.css';
+import '../Styles/index.css';
 
 const Nav: React.FC = () => {
   return (
     <nav className="nav">
       <Link className="nav-link" to="/">Candidate Search</Link>
-      <Link className="nav-link" to="/SavedCandidates">Saved Candidates</Link>
+      <Link className="nav-link" to="/saved">Saved Candidates</Link>
     </nav>
   );
 };
