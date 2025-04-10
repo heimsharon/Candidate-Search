@@ -9,6 +9,7 @@ export interface Candidate {
     email: string;
     html_url: string;
     company: string;
+    bio: string;
 }
 
 export interface CandidateDetails {
@@ -19,6 +20,7 @@ export interface CandidateDetails {
     email: string;
     html_url: string;
     company: string;
+    bio: string;
 }
 
 export interface CandidateProps {
