@@ -18,7 +18,7 @@ export interface CandidateDetails {
     avatar: string;
     email: string;
     html_url: string;
-    company: string;    
+    company: string;
 }
 
 export interface CandidateProps {
