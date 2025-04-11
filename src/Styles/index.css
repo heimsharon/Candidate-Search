@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
@@ -226,6 +225,13 @@ tbody tr:nth-child(odd) {
 .saved-candidates-table th {
   background-color: #8b8607;
   font-weight: bold;
+  cursor: pointer; /* Make it clear that headers are clickable */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.saved-candidates-table th:hover {
+  background-color: #d1ca0a; /* Slightly lighter color on hover */
+  color: #ffffff; /* Optional: Change text color on hover */
 }
 
 .saved-candidates-table tr:nth-child(even) {

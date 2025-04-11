@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Candidate } from '../interfaces/Candidate.interface';
 import '../Styles/index.css';
@@ -8,6 +8,36 @@ const SavedCandidates: React.FC = () => {
     savedCandidates: Candidate[];
     setSavedCandidates: React.Dispatch<React.SetStateAction<Candidate[]>>;
   }>();
+
+  const [sortConfig, setSortConfig] = useState<{ key: keyof Candidate; direction: 'asc' | 'desc' } | null>(null);
+
+  const sortedCandidates = React.useMemo(() => {
+    if (!sortConfig) return savedCandidates;
+
+    const sorted = [...savedCandidates].sort((a, b) => {
+      if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === 'asc' ? -1 : 1;
+      if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    return sorted;
+  }, [savedCandidates, sortConfig]);
+
+  const handleSort = (key: keyof Candidate) => {
+    setSortConfig((prevConfig) => {
+      if (prevConfig?.key === key) {
+        return { key, direction: prevConfig.direction === 'asc' ? 'desc' : 'asc' };
+      }
+      return { key, direction: 'asc' };
+    });
+  };
+
+  const getSortArrow = (key: keyof Candidate) => {
+    if (sortConfig?.key === key) {
+      return sortConfig.direction === 'asc' ? '↑' : '↓';
+    }
+    return '';
+  };
 
   const handleReject = (index: number) => {
     const updatedCandidates = savedCandidates.filter((_, i) => i !== index);
@@ -21,18 +51,18 @@ const SavedCandidates: React.FC = () => {
         <table className="saved-candidates-table">
           <thead>
             <tr>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Username</th>
-              <th>Location</th>
-              <th>Email</th>
-              <th>Company</th>
+              <th onClick={() => handleSort('avatar')}>Image {getSortArrow('avatar')}</th>
+              <th onClick={() => handleSort('name')}>Name {getSortArrow('name')}</th>
+              <th onClick={() => handleSort('username')}>Username {getSortArrow('username')}</th>
+              <th onClick={() => handleSort('location')}>Location {getSortArrow('location')}</th>
+              <th onClick={() => handleSort('email')}>Email {getSortArrow('email')}</th>
+              <th onClick={() => handleSort('company')}>Company {getSortArrow('company')}</th>
               <th>Bio</th>
               <th>Reject</th>
             </tr>
           </thead>
           <tbody>
-            {savedCandidates.map((candidate, index) => (
+            {sortedCandidates.map((candidate, index) => (
               <tr key={index}>
                 <td>
                   <img
