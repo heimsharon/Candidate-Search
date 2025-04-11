@@ -1,102 +1,83 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
 
+/*================================================
+Global Styles
+================================================*/
+
 :root {
   font-family: 'Inter Tight', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+  background-color: #f9f9f9;
+}
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg,
+      rgb(32, 44, 136) 0%,
+      rgb(9, 24, 121) 15%,
+      rgba(0, 2, 18, 1) 100%);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-width: 320px;
+  min-height: 100vh;
+  text-align: center;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-align: center;
+  font-weight: bold;
+  margin: 0.5em 0;
+}
+
+p {
+  margin: 0.5em 0;
+  line-height: 1.6;
 }
 
 a {
   font-weight: 500;
   color: #0c3988;
-  text-decoration: inherit;
+  text-decoration: none;
 }
+
 a:hover {
   color: #535bf2;
 }
 
-/* Global font size and centering */
-body {
-  background: linear-gradient(
-    180deg,
-    rgb(32, 44, 136) 0%,
-    rgb(9, 24, 121) 15%,
-    rgba(0, 2, 18, 1) 100%
-  );
-  background-size: cover;
-  background-repeat: no-repeat no-repeat;
-  background-position: center center;
-  margin: 0;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  font-size: 1.2em; /* Increase the base font size */
-  text-align: center; /* Center all text content */
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  text-align: center; /* Center all headings */
-  font-size: 1.5em; /* Increase font size for headings */
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1.2em; /* Increase font size for buttons */
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1d301d;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-
-
+/*================================================
+Layout Styles
+================================================*/
 main {
-  color: #fff;
-  width: 100%;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
 }
 
-tr {
-  border-radius: 10px;
-  background-color: #000;
-  color: white;
-}
-
-tbody tr:nth-child(odd) {
-  background-color: #333333;
-}
+/*================================================
+Navigation Bar
+================================================*/
 
 .nav {
   display: flex;
-  justify-content: center; /* Center nav items horizontally */
-  align-items: center;    /* Center items vertically */
-  padding: 1em 2em;
-  font-size: 1.2em; /* Increase font size for nav items */
+  justify-content: center;
+  align-items: center;
+  padding: 0.5em 2em;
+  font-size: 1.8em;
+  margin-bottom: 10px;
+  /* Ensure consistent spacing below the nav bar */
 }
 
 .nav-item {
@@ -110,27 +91,63 @@ tbody tr:nth-child(odd) {
   margin-right: 1.5rem;
 }
 
-.active {
-  font-weight: 700;
+/*================================================
+Candidate List(Search) and Cards Page
+================================================*/
+
+/* Candidate Search Header */
+.candidate-search-header {
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-bottom: 2px solid #ccc;
 }
 
-.table {
-  width: 80vw;
-  table-layout: fixed;
-  margin: 0 auto; /* Center the table horizontally */
+.candidate-search-header h1 {
+  font-size: 2em;
+  color: #333;
+  margin: 0;
 }
 
+.candidate-search-header p {
+  font-size: 1.2em;
+  color: #666;
+  margin: 5px 0 0;
+}
+
+.candidates-list {
+  text-align: center;
+  margin: 20px;
+}
+
+.candidates-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Candidate Card Styles */
 .candidate-card {
   border: 5px solid #ccc;
   background-color: rgb(62, 143, 143);
   padding: 56px;
-  margin: 56px;
+  margin: 26px;   
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 1.2em; /* Increase font size for candidate cards */
-  text-align: center; /* Center text in candidate cards */
+  font-size: 1.2em;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.candidate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 .candidate-info img {
@@ -140,157 +157,238 @@ tbody tr:nth-child(odd) {
   margin-bottom: 16px;
 }
 
-.candidate-actions {
+.candidate-info h3 {
+  margin: 10px 0;
+  font-size: 1.5em;
+  color: #ffffff;
+}
+
+.candidate-info p {
+  margin: 10px 0;
+  font-size: 1.1rem;
+  color: #d4d2d2;
+}
+
+.view-profile-link {
+  display: inline-block;
   margin-top: 16px;
+  font-size: 1em;
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.view-profile-link:hover {
+  color: #d1d1d1;
+}
+.candidate-actions {
+  margin-top: 20px;
   display: flex;
   gap: 10px;
   justify-content: center;
 }
+/*================================================
+Saved/Potential Candidates Table Page
+================================================*/
 
-.candidate-actions button {
-  margin: 0 8px;
-  padding: 8px 16px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-/* Saved Candidates */
-.saved-candidates-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.saved-candidate-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px;
-  width: 250px;
+.potential-candidate-list-header,
+.saved-candidates-header {
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-bottom: 2px solid #ccc;
 }
 
-.saved-candidate-card img {
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  margin-bottom: 10px;
+.potential-candidate-list-header h1,
+.saved-candidates-header h1 {
+  font-size: 2em;
+  color: #333;
+  margin: 0;
 }
 
-/* Buttons */
-.save-button {
-  background-color: #28a745; /* Green base color */
-  color: white; /* Ensure text is readable */
-  font-size: 1.5em; /* Increase the font size */
-  padding: 75px 75px; /* Add padding for larger buttons */
-  border-radius: 8px; /* Rounded corners */
-  cursor: pointer;
+.potential-candidate-list-header p,
+.saved-candidates-header p {
+  font-size: 1.2em;
+  color: #666;
+  margin: 5px 0 0;
 }
 
-.save-button:hover {
-  background-color: #218838; /* Darker green for hover effect */
-}
-
-.skip-button {
-  background-color: #dc3545; /* Red base color */
-  color: white; /* Ensure text is readable */
-  font-size: 1.5em; /* Increase the font size */
-  padding: 75px 75px; /* Add padding for larger buttons */
-  border-radius: 8px; /* Rounded corners */
-  cursor: pointer;
-}
-
-.skip-button:hover {
-  background-color: #5b171f; /* Darker red for hover effect */
-}
-
-/* Table Styling */
+/* Saved Candidates Table */
 .saved-candidates-table {
-  width: 170%;
+  width: 90%;
+  max-width: 1200px;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin: 20px auto;
+  text-align: center;
 }
 
 .saved-candidates-table th,
 .saved-candidates-table td {
   border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center; /* Center content horizontally in table cells */
-  vertical-align: middle; /* Center content vertically in table cells */
-  font-size: 1.2em; /* Increase font size for table content */
+  padding: 12px;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .saved-candidates-table th {
   background-color: #8b8607;
   font-weight: bold;
-  cursor: pointer; /* Make it clear that headers are clickable */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .saved-candidates-table th:hover {
-  background-color: #d1ca0a; /* Slightly lighter color on hover */
-  color: #ffffff; /* Optional: Change text color on hover */
+  background-color: #d1ca0a;
+  color: #ffffff;
+}
+
+.saved-candidates-table tr:nth-child(odd) {
+  background-color: #3b3838;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #c0bebe
 }
 
 .saved-candidates-table tr:nth-child(even) {
-  background-color: #747171;
+  background-color: #7b7878;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #e6e2e2
 }
 
 .saved-candidates-table tr:hover {
-  background-color: #69097c;
+  background-color: #8915a9;
 }
 
 .candidate-avatar {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  display: block; /* Ensure the image is treated as a block element */
-  margin: 0 auto; /* Center the image horizontally */
+}
+
+/*================================================
+Buttons
+================================================*/
+button {
+  font-family: inherit;
+  font-size: 1em;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+.save-button {
+  background-color: #28a745;
+  color: white;
+  font-size: 1.5em;
+  padding: 1em 2em;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+.skip-button {
+  background-color: #dc3545;
+  color: white;
+  font-size: 1.5em;
+  padding: 1em 2em;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.skip-button:hover {
+  background-color: #5b171f;
 }
 
 .reject-button {
   background-color: #d53125;
+  /* Red color for reject */
   color: white;
+  /* White text for contrast */
+  font-size: 1em;
+  /* Match the font size of other buttons */
+  padding: 0.5em 1em;
+  /* Consistent padding */
+  border-radius: 50px;
+  /* Rounded button */
   border: none;
-  padding: 5px 10px;
-  border-radius: 55px;
+  /* Remove border */
   cursor: pointer;
-  display: block; /* Ensure the button is treated as a block element */
-  margin: 0 auto; /* Center the button horizontally */
+  /* Pointer cursor on hover */
+  transition: background-color 0.3s ease;
+  /* Smooth hover effect */
 }
 
 .reject-button:hover {
-  background-color: #480e0d;
+  background-color: #a71d1a;
+  /* Darker red on hover */
 }
 
-.plus-button, .minus-button {
-  font-size: 2.5em; /* Further increase the font size */
-  padding: 20px 30px; /* Add more padding for larger buttons */
-  border-radius: 12px; /* Adjust border radius for a rounded look */
-  width: 80px; /* Set a fixed width for consistency */
-  height: 80px; /* Set a fixed height for consistency */
-  display: flex; /* Ensure proper alignment */
-  justify-content: center; /* Center the content horizontally */
-  align-items: center; /* Center the content vertically */
+/*================================================
+Pagination Controls
+================================================*/
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 20px auto;
+  text-align: center;
+  transform: translateX(-40px);
+}
+
+.pagination-controls button {
+  margin: 0 5px;
+  padding: 0.5em 1em;
+  background-color: #007bff;
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.plus-button:hover, .minus-button:hover {
-  background-color: #3b3f95; /* Optional: Add hover effect */
-  color: white; /* Optional: Change text color on hover */
+.pagination-controls button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.pagination-controls span {
+  font-size: 1.2em;
+  margin: 0 10px;
+  color: #535bf2
+}
+
+/*================================================
+Media Queries for Responsiveness
+================================================*/
+@media (max-width: 768px) {
+  .saved-candidates-table {
+    font-size: 0.9em;
   }
-  a:hover {
-    color: #747bff;
+
+  .candidate-avatar {
+    width: 40px;
+    height: 40px;
   }
-  button {
-    background-color: #f9f9f9;
+
+  .plus-button,
+  .minus-button {
+    font-size: 2em;
+    padding: 0.5em;
   }
 }

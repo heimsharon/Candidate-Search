@@ -50,6 +50,10 @@ const CandidateSearch: React.FC = () => {
 
   return (
     <div>
+       <header className="candidate-search-header">
+        <h1>Candidate Search</h1>
+        <p>Review potential candidates and save or skip them.</p>
+      </header>
       {candidates.length > 0 ? (
         <div className="candidate-card">
           <div className="candidate-info">

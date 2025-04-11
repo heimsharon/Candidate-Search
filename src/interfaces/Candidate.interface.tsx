@@ -42,6 +42,7 @@ const Candidate = ({ candidate, onSave, onSkip, isOpen, handleToggle }: Candidat
     return (
         <>
             <div className="candidate">
+
                 <div className="candidate-header" onClick={handleToggle}>
                     <img src={candidate.avatar} alt={`${candidate.name}'s avatar`} />
                     <h2>{candidate.name}</h2>

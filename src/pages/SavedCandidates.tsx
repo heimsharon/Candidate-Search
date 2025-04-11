@@ -1,7 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Candidate } from '../interfaces/Candidate.interface';
+
 import '../Styles/index.css';
+
+function useSortableData<T>(items: T[]) {
+  const [sortConfig, setSortConfig] = useState<{ key: keyof T; direction: 'asc' | 'desc' } | null>(null);
+
+  const sortedItems = React.useMemo(() => {
+    if (!sortConfig) return items;
+    return [...items].sort((a, b) => {
+      if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === 'asc' ? -1 : 1;
+      if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }, [items, sortConfig]);
+
+  return { sortedItems, setSortConfig };
+}
 
 const SavedCandidates: React.FC = () => {
   const { savedCandidates, setSavedCandidates } = useOutletContext<{
@@ -9,19 +25,23 @@ const SavedCandidates: React.FC = () => {
     setSavedCandidates: React.Dispatch<React.SetStateAction<Candidate[]>>;
   }>();
 
-  const [sortConfig, setSortConfig] = useState<{ key: keyof Candidate; direction: 'asc' | 'desc' } | null>(null);
+  const [sortConfig, setSortConfig] = React.useState<{ key: keyof Candidate; direction: 'asc' | 'desc' } | null>(null);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const candidatesPerPage = 10;
 
   const sortedCandidates = React.useMemo(() => {
     if (!sortConfig) return savedCandidates;
-
-    const sorted = [...savedCandidates].sort((a, b) => {
+    return [...savedCandidates].sort((a, b) => {
       if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === 'asc' ? -1 : 1;
       if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === 'asc' ? 1 : -1;
       return 0;
     });
-
-    return sorted;
   }, [savedCandidates, sortConfig]);
+
+  const paginatedCandidates = React.useMemo(() => {
+    const startIndex = (currentPage - 1) * candidatesPerPage;
+    return sortedCandidates.slice(startIndex, startIndex + candidatesPerPage);
+  }, [sortedCandidates, currentPage]);
 
   const handleSort = (key: keyof Candidate) => {
     setSortConfig((prevConfig) => {
@@ -39,67 +59,77 @@ const SavedCandidates: React.FC = () => {
     return '';
   };
 
-  const handleReject = (index: number) => {
-    const updatedCandidates = savedCandidates.filter((_, i) => i !== index);
-    setSavedCandidates(updatedCandidates);
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(savedCandidates.length / candidatesPerPage)));
   };
 
   return (
-    <>
-      <h1>Potential Candidates</h1>
-      {savedCandidates.length > 0 ? (
-        <table className="saved-candidates-table">
-          <thead>
-            <tr>
-              <th onClick={() => handleSort('avatar')}>Image {getSortArrow('avatar')}</th>
-              <th onClick={() => handleSort('name')}>Name {getSortArrow('name')}</th>
-              <th onClick={() => handleSort('username')}>Username {getSortArrow('username')}</th>
-              <th onClick={() => handleSort('location')}>Location {getSortArrow('location')}</th>
-              <th onClick={() => handleSort('email')}>Email {getSortArrow('email')}</th>
-              <th onClick={() => handleSort('company')}>Company {getSortArrow('company')}</th>
-              <th>Bio</th>
-              <th>Reject</th>
+    <><header className="potential-candidate-list-header">
+    <h1>Potential Candidate</h1>
+    <p>Review potential candidates, with the ability to sort by category .</p>
+  </header>
+      <table className="saved-candidates-table">
+        <thead>
+          <tr>
+            <th onClick={() => handleSort('avatar')}>Avatar {getSortArrow('avatar')}</th>
+            <th onClick={() => handleSort('name')}>Name {getSortArrow('name')}</th>
+            <th onClick={() => handleSort('username')}>Username {getSortArrow('username')}</th>
+            <th onClick={() => handleSort('location')}>Location {getSortArrow('location')}</th>
+            <th onClick={() => handleSort('email')}>Email {getSortArrow('email')}</th>
+            <th onClick={() => handleSort('company')}>Company {getSortArrow('company')}</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {paginatedCandidates.map((candidate) => (
+            <tr key={candidate.username}>
+              <td>
+                <img
+                  src={candidate.avatar}
+                  alt={`${candidate.name}'s avatar`}
+                  className="candidate-avatar"
+                />
+              </td>
+              <td>{candidate.name}</td>
+              <td>{candidate.username}</td>
+              <td>{candidate.location}</td>
+              <td>{candidate.email}</td>
+              <td>{candidate.company}</td>
+              <td>
+                <button
+                  className="reject-button"
+                  onClick={() => {
+                    const updatedCandidates = savedCandidates.filter(
+                      (c) => c.username !== candidate.username
+                    );
+                    setSavedCandidates(updatedCandidates);
+                  }}
+                >
+                  Reject
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {sortedCandidates.map((candidate, index) => (
-              <tr key={index}>
-                <td>
-                  <img
-                    src={candidate.avatar}
-                    alt={`${candidate.name}'s avatar`}
-                    className="candidate-avatar"
-                  />
-                </td>
-                <td>{candidate.name}</td>
-                <td>{candidate.username}</td>
-                <td>{candidate.location}</td>
-                <td>{candidate.email}</td>
-                <td>{candidate.company}</td>
-                <td>
-                  <a
-                    href={candidate.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View Profile
-                  </a>
-                </td>
-                <td>
-                  <button
-                    className="reject-button"
-                    onClick={() => handleReject(index)}
-                  >
-                    Reject
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <h2>No saved candidates yet.</h2>
-      )}
+          ))}
+        </tbody>
+      </table>
+      <div className="pagination-controls">
+        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+          Previous
+        </button>
+        <span>
+          Page {currentPage} of {Math.ceil(savedCandidates.length / candidatesPerPage)}
+        </span>
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage === Math.ceil(savedCandidates.length / candidatesPerPage)}
+        >
+          Next
+        </button>
+      </div>
     </>
   );
 };

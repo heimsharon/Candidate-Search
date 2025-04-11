@@ -34,21 +34,28 @@ const CandidatesList: React.FC = () => {
   if (candidates.length === 0) return <p>No candidates available.</p>;
 
   return (
-    <div>
+    <div className="candidates-list">
       <h2>Potential Candidates</h2>
-      <ul>
+      <div className="candidates-container">
         {candidates.map((candidate) => (
-          <li key={candidate.id}>
-            <img src={candidate.avatar_url} alt={`${candidate.login}'s avatar`} width={50} />
-            <p>
-              <strong>{candidate.login}</strong>
-            </p>
-            <a href={candidate.html_url} target="_blank" rel="noopener noreferrer">
+          <div key={candidate.id} className="candidate-card">
+            <img
+              src={candidate.avatar_url}
+              alt={`${candidate.login}'s avatar`}
+              className="candidate-avatar"
+            />
+            <h3>{candidate.login}</h3>
+            <a
+              href={candidate.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="view-profile-link"
+            >
               View Profile
             </a>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
