@@ -1,3 +1,5 @@
+// This file allow there to be a nav bar to navigate, needed for the app functionality
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../Styles/index.css';

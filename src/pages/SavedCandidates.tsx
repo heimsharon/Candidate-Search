@@ -1,12 +1,17 @@
-// This file is where the saved candidates are displayed and managed.
+// Summary:
+// This file displays a list of saved candidates, allowing users to sort, paginate, and clear the list.
+// It retrieves saved candidates from localStorage and provides sorting and pagination functionality.
+
 import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Candidate } from '../interfaces/Candidate.interface';
 import '../Styles/index.css';
 
+// Custom hook to handle sorting logic
 function useSortableData<T>(items: T[]) {
   const [sortConfig, setSortConfig] = useState<{ key: keyof T; direction: 'asc' | 'desc' } | null>(null);
 
+  // Sort items based on the current sort configuration
   const sortedItems = React.useMemo(() => {
     if (!sortConfig) return items;
 
@@ -21,39 +26,48 @@ function useSortableData<T>(items: T[]) {
 }
 
 const SavedCandidates: React.FC = () => {
+  // Retrieve saved candidates and the function to update them from the Outlet context
   const { savedCandidates, setSavedCandidates } = useOutletContext<{
     savedCandidates: Candidate[];
     setSavedCandidates: React.Dispatch<React.SetStateAction<Candidate[]>>;
   }>();
 
+  // State to track the current page for pagination
   const [currentPage, setCurrentPage] = React.useState(1);
-  const candidatesPerPage = 10;
+  const candidatesPerPage = 10; // Number of candidates displayed per page
 
+  // Load saved candidates from localStorage when the component mounts
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem('savedCandidates') || '[]');
     setSavedCandidates(saved);
   }, []);
 
+  // Save updated candidates to localStorage whenever the savedCandidates state changes
   useEffect(() => {
     localStorage.setItem('savedCandidates', JSON.stringify(savedCandidates));
   }, [savedCandidates]);
 
+  // Use the custom sorting hook to manage sorting logic
   const { sortedItems: sortedCandidates, setSortConfig } = useSortableData(savedCandidates);
   const [sortConfig, setSortConfigState] = useState<{ key: keyof Candidate; direction: 'asc' | 'desc' } | null>(null);
 
+  // Paginate the sorted candidates
   const paginatedCandidates = React.useMemo(() => {
     const startIndex = (currentPage - 1) * candidatesPerPage;
     return sortedCandidates.slice(startIndex, startIndex + candidatesPerPage);
   }, [sortedCandidates, currentPage]);
 
+  // Handle navigation to the previous page
   const handlePreviousPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
 
+  // Handle navigation to the next page
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(sortedCandidates.length / candidatesPerPage)));
   };
 
+  // Handle clearing the saved candidates list
   const handleClearList = () => {
     const confirmClear = window.confirm('Are you sure you want to clear the saved candidates list?');
     if (confirmClear) {
@@ -62,6 +76,7 @@ const SavedCandidates: React.FC = () => {
     }
   };
 
+  // Handle sorting by a specific column
   const handleSort = (key: keyof Candidate) => {
     setSortConfigState((prevConfig) => {
       if (prevConfig?.key === key) {
@@ -77,6 +92,7 @@ const SavedCandidates: React.FC = () => {
     });
   };
 
+  // Get the sort arrow (▲ or ▼) for the current sort column
   const getSortArrow = (key: keyof Candidate) => {
     if (sortConfig?.key === key) {
       return sortConfig.direction === 'asc' ? ' ▲' : ' ▼';
@@ -86,10 +102,13 @@ const SavedCandidates: React.FC = () => {
 
   return (
     <>
+      {/* Header for the Saved Candidates page */}
       <header className="saved-candidates-header">
         <h1>Saved Candidates</h1>
         <p>List of saved candidates with sorting options.</p>
       </header>
+
+      {/* Table displaying the saved candidates */}
       <table className="saved-candidates-table">
         <thead>
           <tr>
@@ -143,6 +162,8 @@ const SavedCandidates: React.FC = () => {
           ))}
         </tbody>
       </table>
+
+      {/* Pagination controls */}
       <div className="pagination-controls">
         <button
           onClick={handlePreviousPage}
@@ -162,6 +183,8 @@ const SavedCandidates: React.FC = () => {
           Next
         </button>
       </div>
+
+      {/* Clear list button */}
       <div className="clear-list-container">
         <button
           className="clear-list-button"
