@@ -68,6 +68,8 @@ const CandidateSearch: React.FC = () => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   // State to track the index of the current candidate being displayed
   const [currentIndex, setCurrentIndex] = useState(0);
+  // State to store error messages
+  const [error, setError] = useState<string | null>(null);
 
   // Function to handle saving a candidate
   const handleSave = (candidate: Candidate) => {
@@ -86,30 +88,47 @@ const CandidateSearch: React.FC = () => {
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
-        const data = await searchGithub(); // Use the API function
-        const formattedData = data.map((user: any) => ({
-          name: user.login,
-          username: user.login,
-          location: user.location || 'Unknown',
-          avatar: user.avatar_url,
-          email: user.email || 'Not available',
-          html_url: user.html_url,
-          company: user.company || 'Not available',
-        }));
-
-        setCandidates(formattedData); // Update the candidates state with the formatted data
+        const data = await searchGithub(); // Fetch the list of users
+        const detailedCandidates = await Promise.all(
+          data.map(async (user: any) => {
+            const response = await fetch(`https://api.github.com/users/${user.login}`, {
+              headers: {
+                Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
+              },
+            });
+            const userDetails = await response.json();
+            return {
+              name: userDetails.name || user.login,
+              username: user.login,
+              location: userDetails.location || 'Unknown',
+              avatar: user.avatar_url,
+              email: userDetails.email || 'Not available',
+              html_url: user.html_url,
+              company: userDetails.company || 'Not available',
+              bio: userDetails.bio || '',
+            };
+          })
+        );
+        setCandidates(detailedCandidates);
       } catch (error) {
-        console.error('Error fetching candidates:', error); // Log any errors during the API call
+        console.error('Error fetching candidates:', error);
+        setError('Failed to load candidates. Please try again later.');
       }
     };
 
     fetchCandidates(); // Trigger the API call
   }, []); // Empty dependency array ensures this runs only once when the component mounts
 
+  // Render error message
+  if (error) return <p className="error-message">{error}</p>;
+
   // Display a message if there are no more candidates to review
   if (currentIndex >= candidates.length) {
     return <h1 className="no-candidates-message">No more candidates available</h1>;
   }
+
+  // Display a loading message if no candidates are available
+  if (candidates.length === 0) return <h1 className="loading-message">Loading candidates...</h1>;
 
   return (
     <div>
@@ -119,16 +138,12 @@ const CandidateSearch: React.FC = () => {
         <p>Review potential candidates and save or skip them.</p>
       </header>
 
-      {/* Display the current candidate or a loading message */}
-      {candidates.length > 0 ? (
-        <CandidateCard
-          candidate={candidates[currentIndex]} // Pass the current candidate to the CandidateCard component
-          onSave={() => handleSave(candidates[currentIndex])} // Pass the save handler
-          onSkip={handleSkip} // Pass the skip handler
-        />
-      ) : (
-        <h1 className="loading-message">Loading candidates...</h1>
-      )}
+      {/* Display the current candidate */}
+      <CandidateCard
+        candidate={candidates[currentIndex]} // Pass the current candidate to the CandidateCard component
+        onSave={() => handleSave(candidates[currentIndex])} // Pass the save handler
+        onSkip={handleSkip} // Pass the skip handler
+      />
     </div>
   );
 };
