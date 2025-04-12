@@ -38,17 +38,20 @@ const SavedCandidates: React.FC = () => {
     localStorage.setItem('savedCandidates', JSON.stringify(savedCandidates));
   }, [savedCandidates]);
 
+  const { sortedItems: sortedCandidates, setSortConfig } = useSortableData(savedCandidates);
+  const [sortConfig, setSortConfigState] = useState<{ key: keyof Candidate; direction: 'asc' | 'desc' } | null>(null);
+
   const paginatedCandidates = React.useMemo(() => {
     const startIndex = (currentPage - 1) * candidatesPerPage;
-    return savedCandidates.slice(startIndex, startIndex + candidatesPerPage);
-  }, [savedCandidates, currentPage]);
+    return sortedCandidates.slice(startIndex, startIndex + candidatesPerPage);
+  }, [sortedCandidates, currentPage]);
 
   const handlePreviousPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
 
   const handleNextPage = () => {
-    setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(savedCandidates.length / candidatesPerPage)));
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(sortedCandidates.length / candidatesPerPage)));
   };
 
   const handleClearList = () => {
@@ -59,10 +62,13 @@ const SavedCandidates: React.FC = () => {
     }
   };
 
-  // Use the custom hook for sorting
-  const { sortedItems: sortedCandidates, setSortConfig } = useSortableData(savedCandidates);
-
   const handleSort = (key: keyof Candidate) => {
+    setSortConfigState((prevConfig) => {
+      if (prevConfig?.key === key) {
+        return { key, direction: prevConfig.direction === 'asc' ? 'desc' : 'asc' };
+      }
+      return { key, direction: 'asc' };
+    });
     setSortConfig((prevConfig) => {
       if (prevConfig?.key === key) {
         return { key, direction: prevConfig.direction === 'asc' ? 'desc' : 'asc' };
@@ -71,21 +77,36 @@ const SavedCandidates: React.FC = () => {
     });
   };
 
+  const getSortArrow = (key: keyof Candidate) => {
+    if (sortConfig?.key === key) {
+      return sortConfig.direction === 'asc' ? ' ▲' : ' ▼';
+    }
+    return '';
+  };
+
   return (
     <>
       <header className="saved-candidates-header">
-        <h1>Potential Candidates</h1>
+        <h1>Saved Candidates</h1>
         <p>List of saved candidates with sorting options.</p>
       </header>
       <table className="saved-candidates-table">
         <thead>
           <tr>
             <th>Avatar</th>
-            <th onClick={() => handleSort('name')}>Name</th>
-            <th>Username</th>
-            <th onClick={() => handleSort('location')}>Location</th>
+            <th onClick={() => handleSort('name')} style={{ cursor: 'pointer' }}>
+              Name{getSortArrow('name')}
+            </th>
+            <th onClick={() => handleSort('username')} style={{ cursor: 'pointer' }}>
+              Username{getSortArrow('username')}
+            </th>
+            <th onClick={() => handleSort('location')} style={{ cursor: 'pointer' }}>
+              Location{getSortArrow('location')}
+            </th>
             <th>Email</th>
-            <th onClick={() => handleSort('company')}>Company</th>
+            <th onClick={() => handleSort('company')} style={{ cursor: 'pointer' }}>
+              Company{getSortArrow('company')}
+            </th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -131,11 +152,11 @@ const SavedCandidates: React.FC = () => {
           Previous
         </button>
         <span>
-          Page {currentPage} of {Math.ceil(savedCandidates.length / candidatesPerPage)}
+          Page {currentPage} of {Math.ceil(sortedCandidates.length / candidatesPerPage)}
         </span>
         <button
           onClick={handleNextPage}
-          disabled={currentPage === Math.ceil(savedCandidates.length / candidatesPerPage)}
+          disabled={currentPage === Math.ceil(sortedCandidates.length / candidatesPerPage)}
           aria-label="Go to next page"
         >
           Next
