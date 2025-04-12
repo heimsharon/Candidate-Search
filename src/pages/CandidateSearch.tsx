@@ -7,6 +7,7 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Candidate } from '../interfaces/Candidate.interface';
+import { searchGithub } from '../api/API'; // Import the function
 import '../Styles/index.css';
 
 // CandidateCard Component:
@@ -85,10 +86,7 @@ const CandidateSearch: React.FC = () => {
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
-        const response = await fetch('https://api.github.com/users'); // Fetch data from the GitHub API
-        const data = await response.json();
-
-        // Format the fetched data to match the Candidate interface
+        const data = await searchGithub(); // Use the API function
         const formattedData = data.map((user: any) => ({
           name: user.login,
           username: user.login,
