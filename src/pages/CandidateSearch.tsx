@@ -91,27 +91,43 @@ const CandidateSearch: React.FC = () => {
         const data = await searchGithub(); // Fetch the list of users
         const detailedCandidates = await Promise.all(
           data.map(async (user: any) => {
-            const response = await fetch(`https://api.github.com/users/${user.login}`, {
-              headers: {
-                Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
-              },
-            });
-            const userDetails = await response.json();
-            return {
-              name: userDetails.name || user.login,
-              username: user.login,
-              location: userDetails.location || 'Unknown',
-              avatar: user.avatar_url,
-              email: userDetails.email || 'Not available',
-              html_url: user.html_url,
-              company: userDetails.company || 'Not available',
-              bio: userDetails.bio || '',
-            };
+            try {
+              const response = await fetch(`https://api.github.com/users/${user.login}`, {
+                headers: {
+                  Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
+                },
+              });
+              if (!response.ok) {
+                throw new Error(`Failed to fetch details for user: ${user.login}`);
+              }
+              const userDetails = await response.json();
+              return {
+                name: userDetails.name || user.login,
+                username: user.login,
+                location: userDetails.location || 'Unknown',
+                avatar: user.avatar_url,
+                email: userDetails.email || 'Not available',
+                html_url: user.html_url,
+                company: userDetails.company || 'Not available',
+                bio: userDetails.bio || '',
+              };
+            } catch (error) {
+              if (error instanceof Error) {
+                console.error(error.message);
+              } else {
+                console.error('An unknown error occurred');
+              }
+              return null; // Skip this user if there's an error
+            }
           })
         );
-        setCandidates(detailedCandidates);
+        setCandidates(detailedCandidates.filter((candidate) => candidate !== null));
       } catch (error) {
-        console.error('Error fetching candidates:', error);
+        if (error instanceof Error) {
+          console.error('Failed to fetch candidates:', error.message);
+        } else {
+          console.error('An unknown error occurred while fetching candidates');
+        }
         setError('Failed to load candidates. Please try again later.');
       }
     };
