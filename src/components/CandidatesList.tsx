@@ -30,8 +30,8 @@ const CandidatesList: React.FC = () => {
   }, []);
 
   if (loading) return <p>Loading candidates...</p>;
-  if (error) return <p>{error}</p>;
-  if (candidates.length === 0) return <p>No candidates available.</p>;
+  if (error) return <p className="error-message">Failed to load candidates. Please try again.</p>;
+  if (candidates.length === 0) return <p>No candidates currently available.</p>;
 
   return (
     <div className="candidates-list">

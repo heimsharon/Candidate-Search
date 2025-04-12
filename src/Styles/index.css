@@ -53,7 +53,11 @@ a {
 a:hover {
   color: #535bf2;
 }
-
+.error-message {
+  color: red;
+  font-size: 1.2em;
+  text-align: center;
+}
 /*================================================
 Layout Styles
 ================================================*/
@@ -268,6 +272,11 @@ Saved/Potential Candidates Table Page
   border-radius: 50%;
 }
 
+.clear-list-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
 /*================================================
 Buttons
 ================================================*/
@@ -337,6 +346,20 @@ button:hover {
 .reject-button:hover {
   background-color: #a71d1a;
   /* Darker red on hover */
+}
+.clear-list-button {
+  background-color: #dc3545;
+  color: white;
+  font-size: 1em;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.clear-list-button:hover {
+  background-color: #b02a37;
 }
 
 /*================================================

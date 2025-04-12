@@ -14,7 +14,7 @@ const CurrentCandidate: React.FC = () => {
   const fetchNextCandidate = async () => {
     const data = await searchGithub();
     if (data.length > 0) {
-      setCandidate(data[0]); // Display the first candidate from the fetched list
+      setCandidate(data[0]); 
     }
   };
 
