@@ -6,6 +6,7 @@ import CandidateSearch from './pages/CandidateSearch';
 import SavedCandidates from './pages/SavedCandidates';
 import ErrorPage from './pages/ErrorPage';
 
+
 const router = createBrowserRouter([
   {
     path: '/',
