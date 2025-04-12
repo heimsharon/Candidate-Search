@@ -9,13 +9,17 @@ export const getAcceptedCandidates = () => {
   return candidates ? JSON.parse(candidates) : [];
 };
 
-const [savedCandidates, setSavedCandidates] = useState<any[]>([]);
+export const useSavedCandidates = () => {
+  const [savedCandidates, setSavedCandidates] = useState<any[]>([]);
 
-useEffect(() => {
-  const saved = JSON.parse(localStorage.getItem('savedCandidates') || '[]');
-  if (Array.isArray(saved)) {
-    setSavedCandidates(saved);
-  } else {
-    setSavedCandidates([]);
-  }
-}, []);
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem('savedCandidates') || '[]');
+    if (Array.isArray(saved)) {
+      setSavedCandidates(saved);
+    } else {
+      setSavedCandidates([]);
+    }
+  }, []);
+
+  return { savedCandidates, setSavedCandidates };
+};
