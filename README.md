@@ -71,10 +71,9 @@ _A modern React app for searching, reviewing, and saving GitHub candidates._
 
 ## Quick Start
 
-```bash
-git clone https://github.com/your-username/Candidate-Search.git
-cd Candidate-Search
-npm install
+> You can get the code by either cloning this repository using Git, or downloading it as a ZIP file from GitHub (click the green "Code" button, then "Download ZIP").
+> On GitHub, you can also browse the code, view commit history, open issues, and submit pull requests.
+
 ```
 
 ---
