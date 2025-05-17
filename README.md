@@ -12,6 +12,7 @@ _A modern React app for searching, reviewing, and saving GitHub candidates._
 **Live Demo:** [Candidate Search on Render](https://candidate-search-pdrr.onrender.com/)
 
 > **Note:** The live demo relies on a GitHub API token, which may expire or hit rate limits. If you encounter errors or missing data, this is likely the cause.
+
 ---
 
 ## Table of Contents
