@@ -1,117 +1,178 @@
-# Candidate Search App
+# Candidate Search
 
-The **Candidate Search App** is a React-based web application that allows users to search for GitHub users, review their profiles, and save potential candidates for future reference. The app provides features such as sorting, pagination, and local storage for saved candidates.
+_A modern React app for searching, reviewing, and saving GitHub candidates._
+
+![MIT License](https://img.shields.io/badge/license-MIT-green)
+![Render Deploy](https://img.shields.io/badge/Deployed-Render-blue)
+![Node.js](https://img.shields.io/badge/Node.js-18%2B-brightgreen)
+![React](https://img.shields.io/badge/React-18+-blue)
+![Vite](https://img.shields.io/badge/Vite-Frontend-yellow)
+![Student Project](https://img.shields.io/badge/student_project-s_heim-yellow)
+
+**Live Demo:** [Candidate Search on Render](https://candidate-search-pdrr.onrender.com/)
+
+> **Note:** The live demo relies on a GitHub API token, which may expire or hit rate limits. If you encounter errors or missing data, this is likely the cause.
+---
 
 ## Table of Contents
 
-- [Candidate Search App](#candidate-search-app)
+- [Candidate Search](#candidate-search)
   - [Table of Contents](#table-of-contents)
+  - [Description](#description)
   - [Features](#features)
-  - [Key Components](#key-components)
-  - [Dependencies/Technologies Used](#dependenciestechnologies-used)
+  - [Prerequisites](#prerequisites)
+  - [Technologies Used](#technologies-used)
+  - [Quick Start](#quick-start)
   - [Installation](#installation)
   - [Usage](#usage)
-  - [Deployment](#deployment)
-  - [Media](#media)
-    - [Live Deployment](#live-deployment)
-    - [Screen Capture](#screen-capture)
+  - [Screenshots](#screenshots)
+    - [Main App](#main-app)
     - [Video Demo](#video-demo)
   - [License](#license)
+  - [Contributing, Support, and FAQ](#contributing-support-and-faq)
+  - [Acknowledgments](#acknowledgments)
+  - [Author](#author)
+
+---
+
+## Description
+
+**Candidate Search** is a React-based web application that allows users to search for GitHub users, review their profiles, and save potential candidates for future reference. The app features sorting, pagination, and persistent local storage for saved candidates.
+
+---
 
 ## Features
 
-- **Search GitHub Users**: Fetch and display GitHub user profiles using the GitHub API.
-- **Save Candidates**: Save potential candidates to a list for future reference.
-- **Pagination**: Navigate through saved candidates with pagination controls.
-- **Sorting**: Sort saved candidates by name, username, location, or company.
-- **Local Storage**: Persist saved candidates across sessions using `localStorage`.
-- **Responsive Design**: Optimized for both desktop and mobile devices.
+-   Search GitHub users and view their profiles
+-   Save candidates for future reference
+-   Sort and paginate saved candidates
+-   Responsive design for desktop and mobile
+-   Local storage persistence
 
-## Key Components
+---
 
-- **CandidateSearch.tsx**: Displays GitHub users and allows saving or skipping candidates.
-- **SavedCandidates.tsx**: Displays saved candidates with sorting and pagination.
-- **API.tsx**: Handles API calls to GitHub.
-- **storage.ts**: Provides utility functions for managing localStorage.
+## Prerequisites
 
-## Dependencies/Technologies Used
+-   [Node.js](https://nodejs.org/) (v18 or higher)
+-   [npm](https://www.npmjs.com/)
+-   A GitHub personal access token ([create one here](https://github.com/settings/tokens))
 
-- **React**: Frontend library for building user interfaces.
-- **React Router**: For navigation between sections without reloading the page.
-- **Vite**: Development environment for fast builds and hot module replacement.
-- **TypeScript**: For type safety and better developer experience.
-- **CSS**: Custom styles for a polished and responsive design.
-- **..env**: Requires GitHub API key (<https://github.com/settings/tokens>).
+---
+
+## Technologies Used
+
+-   [React](https://reactjs.org/)
+-   [React Router](https://reactrouter.com/)
+-   [Vite](https://vitejs.dev/)
+-   [TypeScript](https://www.typescriptlang.org/)
+-   [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+
+---
+
+## Quick Start
+
+```bash
+git clone https://github.com/your-username/Candidate-Search.git
+cd Candidate-Search
+npm install
+```
+
+---
 
 ## Installation
 
-To run this project locally, follow these steps:
+1. **Clone the repository:**
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-username/Candidate-Search
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
-   cd Candidate-Search
-   ```
-
-3. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-4. Create a `.env` file in the root directory and add the following:
-
-    ```env
-    VITE_GITHUB_API_KEY=your_github_api_key 
-
-    Replace your_github_api_key with a valid GitHub personal access token.
+    ```bash
+    git clone https://github.com/your-username/Candidate-Search.git
+    cd Candidate-Search
     ```
 
-5. Start the development server:
+2. **Install dependencies:**
 
-   ```bash
-   npm run dev
-   ```
+    ```bash
+    npm install
+    ```
 
-6. Open your browser and navigate to your port.
+3. **Set up environment variables:**
+
+    Create a `.env` file in the root directory:
+
+    ```env
+    VITE_GITHUB_TOKEN=your_github_personal_access_token
+    ```
+
+    > **Note:** Never commit your real `.env` file to version control.
+
+4. **Start the development server:**
+
+    ```bash
+    npm run dev
+    ```
+
+    The app will be available at [http://localhost:5173](http://localhost:5173) by default.
+
+---
 
 ## Usage
 
-- **Search GitHub Users**: Search for users by username, view their avatars, location, and email (if available).
-- **Save Users**: Save users to local storage and view them in a sortable list.
-- **View Saved Candidates**: Navigate to the "Saved Candidates" section to view, sort, and manage your saved users.
+-   **Search Candidates:** Browse GitHub users and view their details.
+-   **Save Candidates:** Click "Save" to add a candidate to your saved list.
+-   **View Saved Candidates:** Go to the "Potential Candidates" section to view, sort, and manage your saved users.
+-   **Sort & Paginate:** Use table headers and pagination controls to organize your saved candidates.
 
-## Deployment
+---
 
-To deploy the project on **Render**, follow these steps:
+## Screenshots
 
-1. Fork or clone the repository.
-2. Set up environment variables in the Render dashboard:
-    - `VITE_GITHUB_API_KEY`: Your GitHub API key.
-3. Connect the repository to Render and deploy.
-
-## Media
-
-### Live Deployment
-
-[Live Candidate Search App](https://candidate-search-pdrr.onrender.com/)
-
-### Screen Capture
+### Main App
 
 ![Candidate Search App Screenshot](./public/candidatesearchscreencap.jpg)
 
 ### Video Demo
 
-Watch the video demo of the app [here](https://drive.google.com/file/d/1nEKjZC-Iqtj6MZ7Iryw2j6tCbYoV_x2Y/view?usp=sharing)
+[Watch the video demo](https://drive.google.com/file/d/1nEKjZC-Iqtj6MZ7Iryw2j6tCbYoV_x2Y/view?usp=sharing)
+
+---
 
 ## License
 
-This project is licensed under the MIT License. You are free to use, modify, and distribute this software as long as the original license is included in any distribution.
+This project is licensed under the [MIT License](./LICENSE.txt).
 
-See the [LICENSE](./LICENSE) file for more details.
+You are free to use, modify, and distribute this software for personal or commercial purposes, provided you include the original copyright
+and license notice in any copies or substantial portions of the software.
+
+See the [MIT License text](https://opensource.org/licenses/MIT) for full details.
+
+---
+
+## Contributing, Support, and FAQ
+
+-   **Contributions:** Pull requests are welcome! Please open an issue or submit a pull request for improvements or bug fixes.
+-   **Support:** If you encounter any issues or have suggestions, please open an issue on GitHub.
+-   **FAQ:**
+    -   _How do I run the program?_
+        See the [Installation](#installation) and [Usage](#usage) sections above.
+    -   _Can I use this for my own project?_
+        Yes, this project is MIT licensed. See the [License](#license) section.
+    -   _I'm having trouble with the GitHub API or running the app!_
+        -   Double-check your `.env` file value for `VITE_GITHUB_TOKEN`.
+        -   Make sure your token is valid and has the correct permissions.
+        -   Try running `npm install` if you see missing module errors.
+
+---
+
+## Acknowledgments
+
+Portions of this project were developed using starter code provided by [edX Boot Camps LLC](https://bootcamp.edx.org/) for educational purposes.
+
+---
+
+## Author
+
+Created by Sharon Heim.
+For questions or suggestions, please visit my [GitHub profile](https://github.com/heimsharon).
+
+---
+
+© 2025 Candidate Search Project
